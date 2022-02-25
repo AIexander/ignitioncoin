@@ -159,6 +159,7 @@ static const CRPCConvertParam vRPCConvertParams[] =
     { "gettxout", 1 },
     { "gettxout", 2 },
     { "keypoolrefill", 0 },
+    { "estimatefee", 0 },
     { "importprivkey", 2 },
     { "importaddress", 2 },
     { "checkkernel", 0 },

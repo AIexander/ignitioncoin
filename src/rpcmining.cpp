@@ -691,3 +691,43 @@ Value submitblock(const Array& params, bool fHelp)
 
     return Value::null;
 }
+
+Value estimatefee(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "estimatefee nblocks\n"
+            "\nEstimates the approximate fee per kilobyte\n"
+            "needed for a transaction to get confirmed\n"
+            "within nblocks blocks.\n"
+            "\nArguments:\n"
+            "1. nblocks     (numeric)\n"
+            "\nResult:\n"
+            "n :    (numeric) estimated fee-per-kilobyte\n"
+            "\n"
+            "-1.0 is returned if not enough transactions and\n"
+            "blocks have been observed to make an estimate.\n"
+            "\nExample:\n"
+            + HelpExampleCli("estimatefee", "6")
+            );
+
+    RPCTypeCheck(params, boost::assign::list_of(int_type));
+
+    int nBlocks = params[0].get_int();
+
+    if (nBlocks < 1) {
+        nBlocks = 1;
+    }
+    if (nBlocks >= 6) {
+	return 0.0001;
+    }
+	return 0.001;
+ 
+//    CFeeRate feeRate = mempool.estimateFee(nBlocks);
+//    if (feeRate == CFeeRate(0))
+//        return -1.0;
+
+//    return ValueFromAmount(feeRate.GetFeePerK());
+//NOTE: This is NOT an entirely functional estimate, currently with the 20MB limit it is unlikely any transaction will not be confirmed within 1 block.
+// 	
+}
